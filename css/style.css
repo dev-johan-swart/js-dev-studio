@@ -1,0 +1,79 @@
+:root {
+  --bg:          #f7f7fdef;
+  --dark-bg:     #0a0a0f;
+  --surface:     #ffffff;
+  --surface2:    #f0f4ff;
+  --border:      rgba(0,0,0,0.08);
+  --text:        #0f1923;
+  --text-muted:  #5a6778;
+  --text-inv:    #ffffff;
+  --neon:        #5e86ee9d;
+  --card-shadow: 0 8px 32px rgba(10,22,40,0.10);
+  --card-hover:  0 20px 50px rgba(10,22,40,0.18);
+  --radius:      12px;
+  --radius-lg:   18px;
+  --transition:  0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+body {
+    background: var(--dark-bg);
+}
+
+.legal-section {
+  padding: 80px 20px;
+  background: var(--bg);
+}
+
+.legal-container {
+  max-width: 900px;
+  margin: auto;
+  background: var(--neon);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  box-shadow: var(--card-shadow);
+}
+
+.legal-container h2 {
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.legal-container h3 {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: var(--blue);
+}
+
+.legal-container p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.legal-container ul {
+  margin: 10px 0 20px;
+  padding-left: 18px;
+}
+
+.legal-container li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.legal-container a {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.legal-container a:hover {
+  text-decoration: underline;
+}
+
+/* Dark Mode */
+.dark .legal-container {
+  background: var(--surface);
+}

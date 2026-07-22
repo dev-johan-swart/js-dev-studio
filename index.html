@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JS Dev Studio builds fast, modern websites and React applications for businesses in South Africa and worldwide.">
+    <meta name="keywords" content="Web Developer South Africa, React Developer Pretoria, Website Redesign, Frontend Developer">
+    <meta name="author" content="Johan Swart">
+    <title>JS Dev Studio - Innovation in Code</title>
+    <link rel="icon" type="image/png" href="./assets/logo-prime.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --neon-blue: #00f3ff; --neon-pink: #ff00ea; --neon-purple: #9d00ff;
+            --dark-bg: #0a0a0f; --dark-card: #141420; --text-light: #e0e0ff;
+        }
+        
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark-bg); color: var(--text-light); overflow-x: hidden; }  
+        nav { position: fixed; width: 100%; background: rgba(10,10,15,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,243,255,0.2); z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .brand { display: flex; align-items: center; gap: 20px; }
+        .logo-img { height: 80px; width: auto; }
+        
+        .logo { font-size: 1.6rem; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(0,243,255,0.5); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-light); font-weight: 600; position: relative; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--neon-blue); }
+        .nav-links a::before { content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 2px; background: var(--neon-blue); transition: all 0.3s; transform: translateX(-50%); box-shadow: 0 0 10px var(--neon-blue); }
+        .nav-links a:hover::before { width: 100%; }
+        .cta-btn { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; border: none; cursor: pointer; font-weight: 700; transition: all 0.3s; box-shadow: 0 0 20px rgba(0,243,255,0.4); }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(0,243,255,0.8); }
+        
+        .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%); position: relative; padding-top: 80px; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 50%, rgba(0,243,255,0.15), transparent 50%), radial-gradient(circle at 70% 50%, rgba(255,0,234,0.15), transparent 50%); animation: pulse 8s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .hero-container { max-width: 1200px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; text-align: center; }
+        .hero h1 { font-size: 4.5rem; font-weight: 900; margin-bottom: 1.5rem; line-height: 1.1; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink), var(--neon-purple)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 60px rgba(0,243,255,0.3); animation: fadeInUp 1s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero p { font-size: 1.4rem; color: var(--text-light); margin-bottom: 3rem; opacity: 0.9; animation: fadeInUp 1s ease 0.3s backwards; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-btns { display: flex; gap: 1.5rem; justify-content: center; animation: fadeInUp 1s ease 0.6s backwards; }
+        .btn-primary, .btn-outline { padding: 1.2rem 2.5rem; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; border: 2px solid transparent; }
+        .btn-primary { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: white; box-shadow: 0 0 30px rgba(0,243,255,0.5); }
+        .btn-primary:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 50px rgba(0,243,255,0.8); }
+        .btn-outline { background: transparent; color: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0,243,255,0.3); }
+        .btn-outline:hover { background: var(--neon-blue); color: var(--dark-bg); box-shadow: 0 0 40px rgba(0,243,255,0.8); }
+        
+        .trust-indicators{ padding:40px 20px; background:rgba(255,255,255,0.02); }
+        .trust-container{ display:flex; justify-content:center; gap:40px; flex-wrap:wrap; font-size:14px; color:#ccc; }
+        .trust-item{ border:1px solid rgba(255,255,255,0.08); padding:10px 18px; border-radius:6px; backdrop-filter:blur(6px); }
+
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 5rem; }
+        .stat-card { text-align: center; padding: 2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(0,243,255,0.2); border-radius: 15px; backdrop-filter: blur(10px); transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 40px rgba(0,243,255,0.3); }
+        .stat-number { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: rgba(224,224,255,0.7); margin-top: 0.5rem; }
+        .label { color: rgba(224,224,255,0.7); margin-top: 0.5rem; padding: 3px;}
+        
+        .about { padding: 8rem 2rem; background: var(--dark-bg); }
+        .about-content { max-width: 1100px; margin: 0 auto; margin-top: 4rem; }
+        .about-card { background: var(--dark-card); padding: 3.5rem; border-radius: 20px; border: 1px solid rgba(0,243,255,0.15); line-height: 1.9; font-size: 1.05rem; color: rgba(224,224,255,0.85); transition: all 0.4s ease; }
+        .about-card:hover { border-color: var(--neon-blue); box-shadow: 0 15px 50px rgba(0,243,255,0.25); }
+        .about-card p { margin-bottom: 1.5rem; }
+        .about-card p:last-child { margin-bottom: 0; }
+
+        .tech { padding: 8rem 2rem; background: linear-gradient(180deg, var(--dark-bg), var(--dark-card)); }
+        .tech-grid { max-width: 1000px; margin: 4rem auto 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+        .tech-item { background: rgba(0,243,255,0.05); border: 1px solid rgba(0,243,255,0.2); padding: 1.2rem 1rem; text-align: center; border-radius: 14px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        .tech-item:hover { transform: translateY(-6px); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,243,255,0.3); background: rgba(0,243,255,0.1); }
+        @media (max-width: 768px) { .about-card { padding: 2rem; } .tech-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }}
+
+        .process { padding: 8rem 2rem; background: var(--dark-bg); }
+        .process-grid { max-width: 1100px; margin: 4rem auto 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+        .process-step { background: var(--dark-card); padding: 2.5rem; border-radius: 18px; border: 1px solid rgba(0,243,255,0.15); transition: all 0.4s ease; }
+        .process-step:hover { transform: translateY(-8px); border-color: var(--neon-blue); box-shadow: 0 20px 50px rgba(0,243,255,0.25); }
+        .step-number { font-size: 2rem; font-weight: 700; color: var(--neon-blue); margin-bottom: 1rem; }
+        .process-step h3 { margin-bottom: 1rem; }
+        .process-step p { color: rgba(224,224,255,0.85); line-height: 1.7; }
+
+        .services { padding: 8rem 2rem; background: linear-gradient(180deg, var(--dark-bg), var(--dark-card)); }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { font-size: 1.2rem; color: rgba(224,224,255,0.7); }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .service-card { background: var(--dark-card); padding: 3rem; border-radius: 20px; border: 1px solid rgba(0,243,255,0.1); transition: all 0.5s; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,243,255,0.1), rgba(255,0,234,0.1)); opacity: 0; transition: opacity 0.5s; }
+        .service-card:hover::before { opacity: 1; }
+        .service-card:hover { transform: translateY(-15px) rotateX(5deg); border-color: var(--neon-blue); box-shadow: 0 20px 60px rgba(0,243,255,0.4); }
+        .service-icon { font-size: 3.5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px var(--neon-blue)); }
+        .service-card h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--neon-blue); position: relative; z-index: 1; }
+        .service-card p { color: rgba(224,224,255,0.8); line-height: 1.8; position: relative; z-index: 1; }
+        
+        .who-help{ padding:80px 20px; text-align:center; }
+        .who-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; }
+
+        .pricing { padding: 8rem 2rem; background: var(--dark-bg); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 4rem; }
+        .price-card { background: var(--dark-card); padding: 2rem; border-radius: 25px; border: 2px solid rgba(0,243,255,0.2); transition: all 0.4s; position: relative; }
+        .price-card:hover { transform: translateY(-20px); border-color: var(--neon-blue); box-shadow: 0 25px 70px rgba(0,243,255,0.5); }
+        .price-card.featured { background: linear-gradient(135deg, rgba(0,243,255,0.1), rgba(157,0,255,0.1)); border: 2px solid var(--neon-blue); transform: scale(1.08); box-shadow: 0 20px 60px rgba(0,243,255,0.4); }
+        .popular-badge { position: absolute; top: -15px; right: 20px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); color: white; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 0 20px rgba(0,243,255,0.6); }
+        .price-card h3 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--neon-blue); }
+        .price { font-size: 4rem; font-weight: 900; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .price-period { color: rgba(224,224,255,0.6); margin-bottom: 2rem; display: block; }
+        .features-list { list-style: none; margin-bottom: 2.5rem; }
+        .features-list li { padding: 1rem 0; border-bottom: 1px solid rgba(0,243,255,0.1); color: rgba(224,224,255,0.9); }
+        .features-list li::before { content: '✓'; color: var(--neon-blue); font-weight: bold; margin-right: 1rem; font-size: 1.2rem; }
+        .price-btn { width: 100%; padding: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 30px rgba(0,243,255,0.4); }
+        .price-btn:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(0,243,255,0.8); }
+
+        .portfolio { padding: 8rem 2rem; background: linear-gradient(180deg, var(--dark-bg), var(--dark-card)); }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2.5rem; margin-top: 4rem; }
+        .portfolio-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; transition: all 0.5s; border: 2px solid rgba(0,243,255,0.2); }
+        .portfolio-item:hover { transform: scale(1.05); border-color: var(--neon-blue); box-shadow: 0 20px 60px rgba(0,243,255,0.5); }
+        .portfolio-item img { width: 100%; height: 350px; object-fit: cover; transition: transform 0.5s; }
+        .portfolio-item:hover img { transform: scale(1.2); }
+        .portfolio-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); padding: 2.5rem; transform: translateY(100%); transition: transform 0.4s; }
+        .portfolio-item:hover .portfolio-overlay { transform: translateY(0); }
+        .portfolio-overlay h3 { font-size: 1.8rem; color: var(--neon-blue); margin-bottom: 0.8rem; }
+        .portfolio-overlay p { color: rgba(224,224,255,0.9); }
+        
+        footer { background: var(--dark-card); padding: 5rem 2rem 2rem; border-top: 1px solid rgba(0,243,255,0.2); }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-section h3 { font-size: 1.5rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-section p, .footer-section a { color: rgba(224,224,255,0.7); text-decoration: none; display: block; margin-bottom: 0.8rem; transition: color 0.3s; }
+        .footer-section a:hover { color: var(--neon-blue); }
+        .social-icons { display: flex; gap: 1.2rem; margin-top: 1.5rem; }
+        .social-icons a { width: 45px; height: 45px; background: rgba(0,243,255,0.1); border: 1px solid rgba(0,243,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: var(--neon-blue); font-weight: bold; }
+        .social-icons a:hover { background: var(--neon-blue); color: var(--dark-bg); box-shadow: 0 0 30px var(--neon-blue); transform: translateY(-5px); }
+        .footer-bottom { text-align: center; padding-top: 2.5rem; border-top: 1px solid rgba(0,243,255,0.1); color: rgba(224,224,255,0.5); }
+
+        .contact-panel { position: fixed; right: -100%; top: 0; width: 550px; max-width: 100%; height: 100vh; background: var(--dark-card); border-left: 2px solid var(--neon-blue); box-shadow: -10px 0 60px rgba(0,243,255,0.3); z-index: 2000; transition: right 0.5s; overflow-y: auto; }
+        .contact-panel.active { right: 0; }
+        .contact-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1999; opacity: 0; visibility: hidden; transition: all 0.3s; backdrop-filter: blur(5px); }
+        .contact-overlay.active { opacity: 1; visibility: visible; }
+        .contact-header { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .contact-header h2 { font-size: 2rem; color: white; }
+        .close-btn { background: none; border: none; color: white; font-size: 2.5rem; cursor: pointer; transition: transform 0.3s; }
+        .close-btn:hover { transform: rotate(90deg) scale(1.2); }
+        .contact-form { padding: 2.5rem; }
+        .form-group { margin-bottom: 1.8rem; }
+        .form-group label { display: block; margin-bottom: 0.8rem; color: var(--neon-blue); font-weight: 600; font-size: 1.05rem; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 1.2rem; background: rgba(0,243,255,0.05); border: 2px solid rgba(0,243,255,0.2); border-radius: 12px; color: var(--text-light); font-size: 1rem; transition: all 0.3s; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0,243,255,0.3); background: rgba(0,243,255,0.1); }
+        .form-group textarea { resize: vertical; min-height: 140px; }
+        .submit-btn { width: 100%; padding: 1.3rem; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 30px rgba(0,243,255,0.5); }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(0,243,255,0.8); }
+        .contact-info { padding: 2.5rem; background: rgba(0,243,255,0.03); border-top: 1px solid rgba(0,243,255,0.2); }
+        .contact-info h3 { margin-bottom: 1.5rem; color: var(--neon-blue); font-size: 1.5rem; }
+        .contact-item { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; }
+        .contact-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 0 20px rgba(0,243,255,0.5); }
+        .contact-item-text { color: rgba(224,224,255,0.9); }
+        .contact-item-text strong { display: block; color: var(--neon-blue); margin-bottom: 0.3rem; }
+        
+        .whatsapp-float{ position:fixed; bottom:25px; left:25px; width:55px; height:55px; background:#25D366; color:white; font-size:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,0.3); z-index:999; transition:transform .2s ease; }
+        .whatsapp-float:hover{ transform:scale(1.1); }
+
+        .float-btn { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; cursor: pointer; box-shadow: 0 0 40px rgba(0,243,255,0.6); z-index: 999; transition: all 0.3s; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .float-btn:hover { transform: scale(1.15); box-shadow: 0 0 60px rgba(0,243,255,0.9); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2.5rem; }
+            .hero-btns { flex-direction: column; }
+            .portfolio-grid, .service-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="brand">
+                <img class="logo-img" src="./assets/logo-prime.png" alt="JSD Logo" loading="lazy">
+                <div class="logo">JS DEV STUDIO</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+            </ul>
+            <button class="cta-btn" onclick="openContact()">Let's Talk</button>
+        </div>
+    </nav>
+    
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h1>Websites That Actually Grow Your Business</h1>
+            <p>I design and build fast, modern, and high-performing websites that help South African businesses attract more customers, build trust, and convert visitors into clients.</p>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="openContact()">Get a Free Quote</button>
+                <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})">Explore Services</button>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">#1</div>
+                    <div class="stat-label">React & Modern Frontend Specialist</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Performance-Focused Development</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">📱+</div>
+                    <div class="stat-label">Mobile-First Design</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">🌍︎</div>
+                    <div class="stat-label">South African Based, Global Ready</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-indicators">
+        <div class="trust-container">
+      
+            <div class="trust-item">
+                ✔ Fast Turnaround Times
+            </div>
+            <div class="trust-item">
+                ✔ Performance-Focused Websites
+            </div>
+            <div class="trust-item">
+                ✔ Transparent Pricing
+            </div>
+            <div class="trust-item">
+                ✔ Clear communication
+            </div>
+            <div class="trust-item">
+                ✔ Ongoing support after launch
+            </div>
+            <div class="trust-item">
+              ✔ Based in South Africa
+            </div>
+      
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About JS Dev Studio</h2>
+                <p class="section-subtitle">
+                    Building Modern Web Experiences with Precision and Purpose
+                </p>
+            </div>
+    
+            <div class="about-content">
+                <div class="about-card">
+                    <p>
+                        JS Dev Studio → Johan Swart, a frontend-focused web developer based in South Africa, dedicated to building fast, modern, and performance-driven websites and applications.
+                    </p>
+                    <p>
+                        With a strong foundation in HTML, CSS, JavaScript, and React, Johan specializes in transforming outdated or underperforming websites into clean, responsive, and conversion-focused digital experiences. Every project is approached with careful planning, attention to detail, and a commitment to writing maintainable, scalable code.
+                    </p>
+                    <p>
+                        This studio was built on a simple principle: ship real work, solve real problems, and continuously improve.
+                    </p>
+                    <p>
+                        Whether it's optimizing an existing website, building a new business presence from scratch, or modernizing legacy systems, JS Dev Studio focuses on clarity, speed, and user experience.
+                    </p>
+                    <p>
+                        As a developer who believes in constant growth, Johan treats every project as both a delivery and a learning opportunity — ensuring clients receive modern solutions while technical skills continue evolving.
+                    </p>
+                    <p>
+                        If you're looking for a developer who plans carefully, builds deliberately, and delivers professionally — you're in the right place.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech" id="technology">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technology Stack</h2>
+                <p class="section-subtitle">
+                    Modern tools used to build fast, scalable, and maintainable web experiences.
+                </p>
+            </div>
+    
+            <div class="tech-grid">
+                <div class="tech-item">HTML5</div>
+                <div class="tech-item">CSS3</div>
+                <div class="tech-item">JavaScript (ES6+)</div>
+                <div class="tech-item">React</div>
+                <div class="tech-item">TypeScript</div>
+                <div class="tech-item">Vite</div>
+                <div class="tech-item">Git & GitHub</div>
+                <div class="tech-item">Performance Optimization</div>
+                <div class="tech-item">Responsive Design</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Work Process</h2>
+                <p class="section-subtitle">
+                    A structured approach to delivering clean, scalable, and reliable results.
+                </p>
+            </div>
+    
+            <div class="process-grid">
+    
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3>Discovery & Planning</h3>
+                    <p>
+                        Understanding your goals, target audience, and technical requirements 
+                        before writing a single line of code.
+                    </p>
+                </div>
+    
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3>Design & Structure</h3>
+                    <p>
+                        Creating clean layouts, defining component structure, 
+                        and planning for scalability and performance.
+                    </p>
+                </div>
+    
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3>Build & Optimize</h3>
+                    <p>
+                        Writing maintainable, performance-focused code 
+                        with responsiveness and speed as top priorities.
+                    </p>
+                </div>
+    
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h3>Test & Deliver</h3>
+                    <p>
+                        Cross-device testing, refinement, and final optimization 
+                        before smooth deployment.
+                    </p>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+    <section class="who-help">
+        <h2 class="section-title">Who I Help</h2>
+      
+        <div class="who-grid">
+      
+          <div class="process-step">
+            <h3>Small Businesses</h3>
+            <p>Modern websites to help local businesses attract more customers and build trust online.</p>
+          </div>
+      
+          <div class="process-step">
+            <h3>Startups</h3>
+            <p>Landing pages and web platforms designed to launch products and validate ideas quickly.</p>
+          </div>
+      
+          <div class="process-step">
+            <h3>Entrepreneurs</h3>
+            <p>Personal brands, portfolios, and service websites that help professionals stand out online.</p>
+          </div>
+      
+          <div class="process-step">
+            <h3>Local Companies</h3>
+            <p>Professional business websites designed to improve visibility and generate leads.</p>
+          </div>
+      
+        </div>
+      
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Expertise</h2>
+                <p class="section-subtitle">Comprehensive solutions tailored to your needs</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Web Development</h3>
+                    <p>Custom websites built with modern technologies. Lightning-fast performance, SEO-optimized, and designed to convert visitors into customers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>E-commerce Frontend Development</h3>
+                    <p>Frontend development for e-commerce platforms.
+                        Integration with platforms like Shopify, WooCommerce, or APIs.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>React Applications</h3>
+                    <p>Dynamic single-page applications that feel native. Interactive, fast, and built for scalability with the latest React features.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Legacy Modernization</h3>
+                    <p>Transform old Java applications into modern JavaScript/React solutions. Keep your business logic, gain modern performance.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful interfaces that users love. User-centered design approach with focus on accessibility and engagement.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Maintenance & Support</h3>
+                    <p>Ongoing updates, security patches, and feature additions. We're here long after launch to ensure your success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Investment Plans</h2>
+                <p class="section-subtitle">Transparent pricing for exceptional value</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Starter</h3>
+                    <div class="price">From R4,500</div>
+                    <span class="price-period">Once-off payment</span>
+                    <ul class="features-list">
+                        <li>1-3 Page Website</li>
+                        <li>Mobile Responsive</li>
+                        <li>Contact Form</li>
+                        <li>Basic SEO</li>
+                        <li>30 Days Support</li>
+                    </ul>
+                    <p class="price-period">Best for: small businesses or landing pages</p>
+                    <br />
+                    <button class="price-btn" onclick="openContact()">Get Started</button>
+                </div>
+                <div class="price-card">
+                    <h3>Business</h3>
+                    <div class="price">From R8,500</div>
+                    <span class="price-period">Once-off payment</span>
+                    <ul class="features-list">
+                        <li>5-Page Website</li>
+                        <li>Custom design</li>
+                        <li>Performance optimization</li>
+                        <li>SEO foundation</li>
+                        <li>Analytics setup</li>
+                        <li>60 Days Support</li>
+                    </ul>
+                    <p class="price-period">Best for: growing businesses needing more pages & SEO</p>
+                    <br />
+                    <button class="price-btn" onclick="openContact()">Get Started</button>
+                </div>
+                <div class="price-card featured">
+                    <div class="popular-badge">BEST VALUE</div>
+                    <h3>Professional</h3>
+                    <div class="price">From R21,000</div>
+                    <span class="price-period">Once-off payment</span>
+                    <ul class="features-list">
+                        <li>8-Page Website</li>
+                        <li>Custom Design</li>
+                        <li>E-commerce Ready</li>
+                        <li>Advanced SEO</li>
+                        <li>Analytics Integration</li>
+                        <li>60 Days Support</li>
+                    </ul>
+                    <p class="price-period">Best for: e-commerce or advanced websites</p>
+                    <br />
+                    <button class="price-btn" onclick="openContact()">Get Started</button>
+                </div>
+                <div class="price-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom Quote</div>
+                    <span class="price-period">Tailored solution</span>
+                    <ul class="features-list">
+                      <li>Custom web applications</li>
+                      <li>Advanced integrations</li>
+                      <li>Scalable architecture</li>
+                      <li>Ongoing development</li>
+                      <li>Priority support</li>
+                    </ul>
+                    <p class="price-period">Best for: complex or large-scale projects</p>
+                    <button class="price-btn" onclick="openContact()">Contact Us</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Add-On Services</h2>
+            <p class="section-subtitle">Fast, focused solutions for modern businesses</p>
+        </div>
+        <div class="pricing-grid">
+    
+            <div class="price-card">
+                <div class="service-icon">🛠️</div>
+                <h3>Quick Fix</h3>
+                <div class="price">R1,200</div>
+                <span class="price-period">48-hour turnaround</span>
+                <ul class="features-list">
+                    <li>Fix 1–3 Frontend Issues</li>
+                    <li>Mobile Responsiveness Fix</li>
+                    <li>Console Error Cleanup</li>
+                    <li>Basic UI Adjustments</li>
+                    <li>50% Upfront Required</li>
+                </ul>
+                <button class="price-btn" onclick="openContact()">Book Now</button>
+            </div>
+    
+            <div class="price-card featured">
+                <div class="popular-badge">MOST REQUESTED</div>
+                <div class="service-icon">🚀</div>
+                <h3>Performance Boost</h3>
+                <div class="price">R2,200</div>
+                <span class="price-period">Speed & Optimization</span>
+                <ul class="features-list">
+                    <li>Full Speed Audit</li>
+                    <li>Image Optimization</li>
+                    <li>Code Optimization</li>
+                    <li>Lighthouse Score Improvement</li>
+                    <li>Before/After Report</li>
+                    <li>50% Upfront Required</li>
+                </ul>
+                <button class="price-btn" onclick="openContact()">Book Now</button>
+            </div>
+    
+            <div class="price-card">
+                <div class="service-icon">🔄</div>
+                <h3>Website Refresh</h3>
+                <div class="price">R4,500</div>
+                <span class="price-period">5–7 Days</span>
+                <ul class="features-list">
+                    <li>Modern UI Redesign</li>
+                    <li>Responsive Improvements</li>
+                    <li>Performance Upgrade</li>
+                    <li>Conversion Optimization</li>
+                    <li>50% Upfront Required</li>
+                </ul>
+                <button class="price-btn" onclick="openContact()">Book Now</button>
+            </div>
+
+            <div class="price-card">
+                <div class="service-icon">📍</div>
+                <h3>Google Business Profile Setup</h3>
+                <p class="contact-item-text">We help local businesses appear on Google Maps and search results, increasing visibility and customer calls.</p>
+                <div class="price">R800</div>
+                <span class="price-period">1 Day</span>
+                <ul class="features-list">
+                    <li>Google Maps listing setup</li>
+                    <li>Business information optimization</li>
+                    <li>Photo and service configuration</li>
+                    <li>Local search visibility</li>
+                </ul>
+                <button class="price-btn" onclick="openContact()">Book Now</button>
+            </div>
+
+        </div>
+    </div>
+
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+             <h2 class="section-title">Website Care Plans</h2>
+              <p class="section-subtitle">
+                Keep your website secure, fast, and updated with our maintenance plans.
+              </p>
+            </div>
+        </div>
+      
+        <div class="service-grid">
+      
+          <div class="price-card">
+            <h3>Basic Care</h3>
+            <div class="price">R150 p/m</div>
+            <ul class="features-list">
+              <li>Website hosting</li>
+              <li>SSL security</li>
+              <li>Basic monitoring</li>
+              <li>Monthly backups</li>
+            </ul>
+            <button class="price-btn" onclick="openContact()">Get Started</button>
+          </div>
+      
+          <div class="price-card featured">
+            <div class="popular-badge">BEST VALUE</div>
+            <h3>Business Care</h3>
+            <div class="price">R350 p/m</div>
+            <ul class="features-list">
+              <li>Hosting & security</li>
+              <li>Weekly backups</li>
+              <li>Plugin updates</li>
+              <li>Content edits</li>
+              <li>Priority support</li>
+            </ul>
+            <button class="price-btn" onclick="openContact()">Most Popular</button>
+          </div>
+      
+          <div class="price-card">
+            <h3>Premium Care</h3>
+            <div class="price">R750 p/m</div>
+            <ul class="features-list">
+              <li>Everything in Business</li>
+              <li>Performance optimization</li>
+              <li>Monthly improvements</li>
+              <li>SEO monitoring</li>
+              <li>Priority support</li>
+            </ul>
+            <button class="price-btn" onclick="openContact()">Get Started</button>
+          </div>
+          
+        </div>
+    </section>
+    <p class="section-header">*Prices exclude domain, hosting, and third-party services unless specified.*</p> 
+
+    <section class="services" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know before we start</p>
+            </div>
+            <div class="service-grid">
+    
+                <div class="service-card">
+                   <h3>How does payment work?</h3>
+                   <p>A 50% deposit is required to secure your project and begin work. The remaining balance is due upon completion before final delivery.</p>
+                </div>
+                  
+                <div class="service-card">
+                   <h3>How long does a project take?</h3>
+                   <p>Smaller updates can take 1–3 days, while full website builds typically take 1–2 weeks depending on complexity and feedback speed.</p>
+                </div>
+                  
+                <div class="service-card">
+                   <h3>Do you work with existing websites?</h3>
+                   <p>Yes. I can improve, redesign, or optimize your current website, including WordPress and custom-built sites.</p>
+                </div>
+                  
+                <div class="service-card">
+                   <h3>Will my website work on mobile devices?</h3>
+                   <p>Absolutely. All websites are built with a mobile-first approach to ensure they look and perform perfectly on all devices.</p>
+                </div>
+                  
+                <div class="service-card">
+                   <h3>Are revisions included?</h3>
+                   <p>Yes, minor revisions are included to ensure you're happy with the final result. Larger changes outside the agreed scope are quoted separately.</p>
+                </div>
+                  
+                <div class="service-card">
+                   <h3>Do you offer support after launch?</h3>
+                   <p>Yes. Ongoing support and maintenance options are available to keep your website running smoothly after launch.</p>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Terms & Conditions</h2>
+            </div>
+            <div class="price-card">
+                <ul class="features-list">
+                    <li>50% deposit required before project start</li>
+                    <li>Remaining 50% due before final delivery</li>
+                    <li>Scope defined before development begins</li>
+                    <li>Additional features quoted separately</li>
+                    <li>Project timelines depend on communication speed</li>
+                    <li>Completed work may be showcased in portfolio</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero" style="min-height: 60vh;">
+        <div class="hero-container">
+            <h1>Ready to Upgrade Your Website?</h1>
+            <p>Let’s improve performance, design, and conversions — starting this week.</p>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="openContact()">Start Your Project</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Work</h2>
+                <p class="section-subtitle">Projects that showcase innovation and excellence</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&h=700&fit=crop" alt="Analytics Dashboard">
+                    <div class="portfolio-overlay">
+                        <h3>Analytics Dashboard</h3>
+                        <p>Real-time data visualization platform with custom charts and insights for enterprise clients.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1557821552-17105176677c?w=900&h=700&fit=crop" alt="E-commerce Store">
+                    <div class="portfolio-overlay">
+                        <h3>E-commerce Platform</h3>
+                        <p>Full-featured online store with payment gateway, inventory system, and customer management.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&h=700&fit=crop" alt="Corporate Website">
+                    <div class="portfolio-overlay">
+                        <h3>Corporate Website</h3>
+                        <p>Modern business site with team collaboration features and document management system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>JS Dev Studio</h3>
+                <p>Pioneering digital solutions for South African businesses. We turn ambitious ideas into powerful digital realities.</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/dev-johan-swart" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+                    <a href="https://www.fiverr.com/users/johanswart_" target="_blank" rel="noopener noreferrer" aria-label="Fiverr">fi</a>
+                    <a href="https://www.upwork.com/freelancers/~0104742002e0060466" target="_blank" rel="noopener noreferrer" aria-label="upwork">up</a>
+                    <a href="https://github.com/dev-johan-swart" target="_blank" rel="noopener noreferrer" aria-label="GitHub">gh</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                
+                <h3>Services</h3>
+                <a href="#">Web Development</a>
+                <a href="#">E-commerce Solutions</a>
+                <a href="#">React Applications</a>
+                <a href="#">Legacy Modernization</a>
+                <a href="#">UI/UX Design</a>
+                <a href="#">Performance Optimization</a>
+                <a href="#">Modern Rebuild</a>
+                <a href="#">Google Business Profile Setup</a>
+                <a href="#">Website Hosting & Management</a>
+                <a href="#">Website Maintenance & Updates</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="#services">About Us</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#" onclick="openContact()">Contact</a>
+                <a href="#">Careers</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Get In Touch</h3>
+                <p>📧 johan.swart.dev@gmail.com</p>
+                <p>📱 +27 78 394 4289</p>
+                <p>📍 Pretoria, Gauteng, South Africa 🇿🇦</p>
+                <p>⏱️ Mon–Fri: 8:00 – 17:00</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Terms & Privacy</h4>
+                <a href="./privacy/privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="./terms/terms.html" class="footer-link">Terms & Conditions</a>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 JS Dev Studio. Proudly South African. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="contact-overlay" onclick="closeContact()"></div>
+    <div class="contact-panel">
+        <div class="contact-header">
+            <img class="image-wrapper" src="./assets/logo-prime (small).png" alt="JSD-Logo" loading="lazy">
+            <h2>Let's Build Together</h2>
+            <button class="close-btn" onclick="closeContact()">&times;</button>
+        </div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe" autocomplete="name">
+                <input type="text" id="company" name="company" style="display:none" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.co.za" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+27 82 123 4567" pattern="^\+?[0-9\s]{7,15}$" inputmode="tel" autocomplete="tel">
+            </div>
+            <div class="form-group">
+                <label for="service">Service Required</label>
+                <select id="service" name="service">
+                    <option>Website Development</option>
+                    <option>E-commerce Solution</option>
+                    <option>React Application</option>
+                    <option>Legacy Modernization</option>
+                    <option>UI/UX Design</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="budget">Budget Range</label>
+                <select id="budget" name="budget">
+                    <option>R1,000 - R5,000</option>
+                    <option>R5,000 - R10,000</option>
+                    <option>R10,000 - R20,000</option>
+                    <option>R20,000+</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Project Details *</label>
+                <textarea id="message" name="message" autocomplete="off" required placeholder="Tell us about your project..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+        </form>
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-item-text">
+                    <strong>Email</strong>
+                    johan.swart.dev@gmail.com
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div class="contact-item-text">
+                    <strong>Phone</strong>
+                    +27 78 394 4289
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-item-text">
+                    <strong>Location</strong>
+                    Pretoria, Gauteng, South Africa
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/27783944289" class="whatsapp-float" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+            <path d="M20.52 3.48A11.77 11.77 0 0 0 12.05 0C5.5 0 .2 5.3.2 11.84c0 2.09.55 4.13 1.6 5.93L0 24l6.39-1.67a11.82 11.82 0 0 0 5.66 1.45h.01c6.54 0 11.84-5.3 11.84-11.84 0-3.17-1.24-6.15-3.38-8.46zM12.05 21.6c-1.8 0-3.56-.48-5.11-1.38l-.36-.21-3.79.99 1.01-3.69-.24-.38a9.73 9.73 0 0 1-1.5-5.09c0-5.38 4.38-9.76 9.76-9.76 2.61 0 5.06 1.02 6.91 2.87a9.72 9.72 0 0 1 2.85 6.9c0 5.38-4.38 9.75-9.76 9.75zm5.35-7.32c-.29-.15-1.72-.85-1.99-.95-.27-.1-.47-.15-.67.15-.2.29-.77.95-.94 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.57-.49-.49-.67-.5l-.57-.01c-.2 0-.52.07-.8.37-.27.29-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.11 4.51.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.11.57-.08 1.72-.7 1.97-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.57-.35z"/>
+        </svg>
+    </a>
+
+    <div class="float-btn" onclick="openContact()" title="Contact Us">💬</div>
+
+    <script>
+        function openContact() {
+            document.querySelector('.contact-panel').classList.add('active');
+            document.querySelector('.contact-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContact() {
+            document.querySelector('.contact-panel').classList.remove('active');
+            document.querySelector('.contact-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            const subject = `New Project Inquiry from ${data.name}`;
+            const body = `Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0APhone: ${data.phone}%0D%0AService: ${data.service}%0D%0ABudget: ${data.budget}%0D%0A%0D%0AProject Details:%0D%0A${data.message}`;
+            
+            window.location.href = `mailto:johan.swart.dev@gmail.com?subject=${subject}&body=${body}`;
+            
+            alert('Thank you! Your message has been prepared. Your email client will open shortly.');
+            closeContact();
+            e.target.reset();
+        }
+
+        // Smooth scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.service-card, .price-card, .portfolio-item');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <script id="contact-script">
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyobFIidM34xKjs9eYr_75dBwB9BwtJLVybN9UAPtenR1x2oLm3GKL7FCssad0OwbCNNQ/exec";
+    
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+
+            let phoneValue = form.phone.value.trim();
+            phoneValue = phoneValue.replace(/\s+/g, '');
+
+            if (phoneValue.startsWith('0')) {
+                phoneValue = '+27' + phoneValue.substring(1);
+            }
+
+            const data = {
+                name: form.name.value,
+                company: form.company.value,
+                email: form.email.value,
+                phone: phoneValue,
+                service: form.service.value,
+                budget: form.budget.value,
+                message: form.message.value
+            };
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify(data),
+                });
+
+                alert("✅ Message sent successfully!");
+                form.reset();
+                closeContact();
+
+            } catch (error) {
+                alert("⚠️ Network error. Please try again.");
+                console.error(error);
+            }
+        }
+        const submitBtn = document.getElementById("submitBtn");
+
+        submitBtn.textContent = "Sending...";
+        submitBtn.disabled = true;
+
+        submitBtn.textContent = "Send Message";
+        submitBtn.disabled = false;
+    </script>
+
+</body>
+</html>
