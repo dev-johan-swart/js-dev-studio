@@ -742,6 +742,12 @@ function buildRecommendation(check) {
 }
 
 module.exports = async function handler(req, res) {
+  console.log("ENV CHECK:", {
+    exists: Boolean(process.env.PAGESPEED_API_KEY),
+    length: process.env.PAGESPEED_API_KEY?.length || 0,
+    prefix: process.env.PAGESPEED_API_KEY?.substring(0, 6) || "MISSING"
+  });
+  
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
